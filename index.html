@@ -5,10 +5,18 @@
 	<link type="text/css" href="./index.css" rel="stylesheet" />
 </head>
 <body>
+	<span data-bind="text: uriFragment() + ' => ' + ctrl() + '(' + args().join() + ')'" style="position: absolute; right: 0"></span>
 
-
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-	<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+	<h1>Школа Разработки Интерфейсов 2013</h1>
+	
+	<ul class="menu">
+		<li><a href="#student/list">Студенты</a></li>
+		<li><a href="#lecture/list">Список лекций</a></li>
+	</ul>
+	
+	
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
 	<script type="text/javascript" src="./index.js"></script>
 </body>
 </html>
