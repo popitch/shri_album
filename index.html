@@ -4,19 +4,32 @@
 
 	<link type="text/css" href="./index.css" rel="stylesheet" />
 </head>
-<body>
-	<span data-bind="text: uriFragment() + ' => ' + ctrl() + '(' + args().join() + ')'" style="position: absolute; right: 0"></span>
+<body data-bind="with: _.extend($data, data() || {}, helpers())">
+	<!-- debug router -->
+	<span data-bind="text: addr() + ' => ' + ctrl() + '(' + args().join() + ')'" style="position: absolute; right: 0"></span>
 
 	<h1>Школа Разработки Интерфейсов 2013</h1>
-	
+
+	<span data-bind="visible: !data">Loading...</span>
+
 	<ul class="menu">
-		<li><a href="#student/list">Студенты</a></li>
+		<li>
+			<a href="#student/list">Студенты</a>
+			<div data-bind="if: /^student/.test(addr()) && data()"  class="student-list">
+				<ul data-bind="foreach: data().people">
+					<li>
+						<img data-bind="attr: { src: $data['userpic-small'] }" src />
+						<a data-bind="text: social.yaru.name, attr: { href: social.yaru.profile }" href></a>
+					</li>
+				</ul>
+			</div>
+		</li>
 		<li><a href="#lecture/list">Список лекций</a></li>
 	</ul>
-	
-	
+
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
 	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
 	<script type="text/javascript" src="./index.js"></script>
+	<script type="text/javascript" src="./data/index.dev.json"></script>
 </body>
 </html>
