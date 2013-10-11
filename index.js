@@ -17,6 +17,7 @@
 
 	// page model
 	this.pageModel = {
+		// route helper
 		page: {
 			ctrl: ko.observable(),
 			args: ko.observableArray(),
@@ -30,13 +31,6 @@
 				return function() {
 					router.push(fragment);
 				}
-			}
-		},
-
-		// functional helper
-		prop: function(key) {
-			return function(data) {
-				return data[key];
 			}
 		},
 
@@ -58,7 +52,35 @@
 				},
 				deferEvaluation: true
 			});
-		}())
+		}()),
+
+		// functional helpers
+		prop: function(key) {
+			return function(data) {
+				return data[key];
+			};
+		},
+		equals: function(etalon, getter) {
+			return function(data) {
+				return etalon == getter(data);
+			};
+		},
+
+		// other helpers
+		withLinks: function(text) {
+			return text.replace(/(^|\W)(http:\/\/[^\s]*?)($|\)?[\s,])/g, function(s, b, u, e) {
+				return b + '<a href="' + entities(u) + '">' + u + '</a>' + e;
+			});
+
+			function entities(html) {
+				return _.reduce({
+					'"': '&quote;',
+					'\\': '\\\\'
+				}, function(html, search, replace) {
+					return html.split(search).join(replace);
+				}, html)
+			}
+		}
 	};
 
 	// apply page model

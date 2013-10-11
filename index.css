@@ -11,6 +11,7 @@ h1 {
 	cursor: pointer;
 }
 
+/* abstract list (inline blocks) */
 .list {
 	padding: 0;
 	margin:  0 0 1em 0;
@@ -37,6 +38,7 @@ h1 {
 	color: black;
 }
 
+/* menu */
 .menu .list-item {
 	font-size: 124%;
 }
@@ -51,6 +53,7 @@ h1 {
 	padding-left: 20px;
 }
 
+/* student list */
 .student-list {
 	text-align: left;
 }
@@ -59,6 +62,14 @@ h1 {
 	width: 16.25%;
 }
 
+/* student */
+.student img {
+	max-width: 240px;
+	margin: 0 1em 1em 0;
+	float: left;
+}
+
+/* lecture list */
 .lecture-list {
 	text-align: left;
 }

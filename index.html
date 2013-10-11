@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Выпускной альбом студента ШРИ-2013</title>
+	<title>Вторая ШРИ в Москве, 2013</title>
 
 	<link type="text/css" href="./index.css" rel="stylesheet" />
 </head>
 <body>
-	<!-- debug router -->
-	<!--<span data-bind="text: page.addr() + ' => ' + page.ctrl() + '(' + page.args().join() + ')'" style="position: absolute; right: 0"></span>-->
-
-	<h1 data-bind="click: page.pusher('/')">Школа Разработки Интерфейсов 2013</h1>
+	<h1 data-bind="click: page.pusher('/')">Школа Разработки Интерфейсов, Москва, 2013</h1>
 
 	<span data-bind="visible: !data">Loading...</span>
 
@@ -18,15 +15,19 @@
 			<a href="#students" class="link">Студенты</a>
 		</li>
 		<li data-bind="css: { selected: page.is(/^lecture/) }" class="list-item item2">
-			<a href="#lectures" class="link">Список лекций</a>
+			<a href="#lectures" class="link">Лекции</a>
 		</li>
 	</ul>
+
+	<div data-bind="if: page.is('index')">
+		<p>Тра-та-та, та-ра та-та</p>
+	</div>
 
 	<div data-bind="css: { 'has-selected': page.args().length > 0 }" class="menu2">
 		<div data-bind="if: page.is(/^student/) && data()" class="students">
 			<ul data-bind="foreach: _.sortBy(data().students, prop('name'))" class="list student-list">
-				<li data-bind="css: { selected: $index() == $root.page.args()[0] }" class="list-item student-list-item">
-					<a data-bind="text: name, attr: { href: '#student/' + $index() }" href class="link"></a>
+				<li data-bind="css: { selected: id == $root.page.args()[0] }" class="list-item student-list-item">
+					<a data-bind="text: name, attr: { href: '#student/' + id }" href class="link"></a>
 				</li>
 			</ul>
 		</div>
@@ -36,6 +37,28 @@
 					<a data-bind="text: name, attr: { href: '#lecture/' + id }" href class="link"></a>
 				</li>
 			</ul>
+		</div>
+	</div>
+
+	<div data-bind="if: data() && page.is('student')" class="student">
+		<div data-bind="with: _.find(data().students, equals(page.args()[0], prop('id')))">
+			<img src data-bind="attr: { src: photo }" />
+
+			<p data-bind="text: 'Город: ' + city, visible: city" class="student-city-name"></p>
+
+			<div data-bind="if: social.length > 0">
+				Другие нас. пункты:
+				<ul data-bind="foreach: social" class="list" style="display: inline-block; margin: 0">
+					<li class="list-item">
+						<a href data-bind="attr: { href: link }, text: link">
+						</a><span data-bind="if: $index() < $parent.social.length - 1">,</span>
+					</li>
+				</ul>
+			</div>
+
+			<div data-bind="foreach: $root.withLinks(about).split('\n\n')">
+				<p data-bind="html: $data"></p>
+			</div>
 		</div>
 	</div>
 
