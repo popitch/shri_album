@@ -1,35 +1,49 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Выпускной альбом студента ШРИ-2013</title>
 
 	<link type="text/css" href="./index.css" rel="stylesheet" />
 </head>
-<body data-bind="with: _.extend($data, data() || {}, helpers())">
+<body>
 	<!-- debug router -->
-	<span data-bind="text: addr() + ' => ' + ctrl() + '(' + args().join() + ')'" style="position: absolute; right: 0"></span>
+	<!--<span data-bind="text: page.addr() + ' => ' + page.ctrl() + '(' + page.args().join() + ')'" style="position: absolute; right: 0"></span>-->
 
 	<h1>Школа Разработки Интерфейсов 2013</h1>
 
 	<span data-bind="visible: !data">Loading...</span>
 
-	<ul class="menu">
-		<li>
-			<a href="#student/list">Студенты</a>
-			<div data-bind="if: /^student/.test(addr()) && data()"  class="student-list">
-				<ul data-bind="foreach: data().people">
-					<li>
-						<img data-bind="attr: { src: $data['userpic-small'] }" src />
-						<a data-bind="text: social.yaru.name, attr: { href: social.yaru.profile }" href></a>
-					</li>
-				</ul>
-			</div>
+	<ul class="menu list">
+		<li data-bind="css: { selected: page.is(/^student/) }" class="list-item item1">
+			<a href="#students" class="link">Студенты</a>
 		</li>
-		<li><a href="#lecture/list">Список лекций</a></li>
+		<li data-bind="css: { selected: page.is(/^lecture/) }" class="list-item item2">
+			<a href="#lectures" class="link">Список лекций</a>
+		</li>
 	</ul>
 
+	<div data-bind="css: { 'has-selected': page.args().length > 0 }" class="menu2">
+		<div data-bind="if: page.is(/^student/) && data()" class="students">
+			<ul data-bind="foreach: _.sortBy(data().students, prop('name'))" class="list student-list">
+				<li data-bind="css: { selected: $index() == $root.page.args()[0] }" class="list-item student-list-item">
+					<a data-bind="text: name, attr: { href: '#student/' + $index() }" href class="link"></a>
+				</li>
+			</ul>
+		</div>
+		<div data-bind="if: page.is(/^lecture/) && data()" class="lectures">
+			<ul data-bind="foreach: _.sortBy(data().lectures, prop('native_id'))" class="list lecture-list">
+				<li data-bind="css: { selected: id == $root.page.args()[0] }" class="list-item lecture-list-item">
+					<a data-bind="text: name, attr: { href: '#lecture/' + id }" href class="link"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!--[if gte IE 6]>
+	<script src="http://rawgithub.com/balupton/history.js/master/scripts/compressed/history.js"></script>
+	<![endif]-->
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
 	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
 	<script type="text/javascript" src="./index.js"></script>
-	<script type="text/javascript" src="./data/index.dev.json"></script>
 </body>
 </html>

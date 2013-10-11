@@ -1,40 +1,64 @@
 !function() {
-	// data receiver
-	window.JSONP_Receiver = function(data) {
-		page.data(data);
-		console.log(data);
+	var ieVersion = new Function("/*@cc_on return @_jscript_version; @*/")();
+	console.log('ie: ' + ieVersion);
+
+	if (ieVersion) {
+		//getScript('http://rawgithub.com/balupton/history.js/master/scripts/compressed/history.js');
 	}
 
 	// page model
-	var page = {
-		addr: ko.observable(),
-		ctrl: ko.observable(),
-		args: ko.observableArray(),
-
+	this.pageModel = {
+		page: {
+			ctrl: ko.observable(),
+			args: ko.observableArray(),
+			addr: ko.observable(),
+			is: function(template) {
+				if (template instanceof RegExp)
+					return template.test(pageModel.page.ctrl());
+				return template == pageModel.page.ctrl();
+			}
+		},
 		// router here
-		Router: new Router({
-			'index': /^\/?$/,
-			'studentList': /^student\/list$/,
-			'lectureList': /^lecture\/list$/
-		}, function(ctrl, args, fragment) {
-			page.args(args);
-			page.ctrl(ctrl);
-			page.addr(fragment);
-		}),
+		Router: new Router(
+			{
+				'index': /^\/?$/,
+				'students': /^students$/,
+				'student': /^student\/(\d+)$/,
+				'lectures': /^lectures$/,
+				'lecture': /^lecture\/(\d+)$/
+			},
+			function(ctrl, args, fragment) {
+				pageModel.page.args(args);
+				pageModel.page.ctrl(ctrl);
+				pageModel.page.addr(fragment);
+			}
+		),
 
-		data: ko.observable(),
+		// functional helper
+		prop: function(key) {
+			return function(data) {
+				return data[key];
+			}
+		},
 
-		helpers: helpers
+		// lazy data loading
+		data: (function() {
+			var data = ko.observable();
+			return ko.computed({
+				read: function() {
+					if (!data()) {
+						getScript('./data/data.js?9');
+					}
+					return data();
+				},
+				write: data,
+				deferEvaluation: true
+			});
+		}())
 	};
 
 	// page applier
-	ko.applyBindings(page);
-
-	function helpers() {
-		return {
-			is_page: function() {}
-		};
-	}
+	ko.applyBindings(pageModel);
 
 	// router abstract
 	function Router(routes, lift) {
@@ -42,15 +66,14 @@
 
 		_.defer(function() {
 			window.addEventListener('popstate', function(e){
-				pop();
+				showPage();
 			}, false);
-			pop();
+			showPage();
 		});
 
-		function pop(fragment) {
-			if (!arguments.length) {
-				fragment = fragmentOf(location);
-			}
+		function showPage(fragment) {
+			fragment = fragment || fragmentOf(location);
+
 			var found = _.any(routes, function(route, routeName) {
 				var matches = route.exec(fragment);
 				if (matches) {
@@ -59,28 +82,44 @@
 				}
 			});
 			if (!found) {
-				throw 'Unknown page: ' + fragment;
+				// silence redirect
+				location.hash = '#/';
+				showPage('/');
+				//throw 'Unknown page: ' + fragment;
 			}
-			return true;
 		}
 
 		function push(fragment) {
-			if (pop(fragment)) {
-				history.pushState(null, null, '#' + fragment);
-			}
+			console.log('pushState: ' + fragment)
+			history.pushState(null, null, '#' + fragment);
 		}
 
 		// catch simple link click
 		document.addEventListener('click', function(e) {
-			if (e.target.tagName.toLowerCase() == 'a' && /^#/.test(e.target.href)) {
-				e.preventDefault();
-				push(fragmentOf(e.target));
+			var target = e.srcElement || e.target;
+			if (target.tagName.toLowerCase() == 'a' && /#/.test(target.href)) {
+				var fragment = fragmentOf(e.target);
+				showPage(fragment);
+				push(fragment);
+
+				if (e.preventDefault) {
+					e.preventDefault();
+				} else {
+					window.event.returnValue = false;
+				}
 			}
 		});
 
 		function fragmentOf(target) {
 			return target.href.split('#').slice(1).join('#');
 		}
+	}
+
+	// script loading helper
+	function getScript(url) {
+		var script = document.createElement('script');
+		script.src = url;
+		document.body.appendChild(script);
 	}
 
 	// debug helper
