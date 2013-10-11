@@ -1,0 +1,60 @@
+body {
+	margin: 0 1em;
+	padding: 0;
+	font-family: arial,helvetica,sans-serif; 
+	font-size: 18px;
+	line-height: 1.5;
+	word-wrap: break-word;
+}
+
+h1 {
+	text-align: center;
+}
+
+.list {
+	padding: 0;
+	margin:  0 0 1em 0;
+}
+.list-item {
+	display: inline-block;
+	list-style-type: none; 
+}
+.list-item .link {
+	color: #999;
+}
+.list-item:hover .link {
+	color: #666;
+}
+.list-item.selected .link {
+	color: black;
+}
+
+.menu .list-item {
+	font-size: 124%;
+}
+.menu .item1 {
+	width: 50%;
+	text-align: right;
+}
+.menu .item1 .link {
+	margin-right: 20px;
+}
+.menu .item2 {
+	padding-left: 20px;
+}
+
+.student-list {
+	text-align: left;
+}
+.student-list-item {
+	min-width: 210px;
+	width: 16.25%;
+}
+
+.lecture-list {
+	text-align: left;
+}
+.lecture-list-item {
+	min-width: 310px;
+	width: 24%;
+}
