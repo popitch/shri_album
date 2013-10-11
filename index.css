@@ -35,6 +35,7 @@ h1 {
 	padding-bottom: 0;
 	border-bottom: 2px solid black;
 	text-decoration: none;
+	font-weight: bold;
 	color: black;
 }
 
@@ -62,7 +63,7 @@ h1 {
 	width: 16.25%;
 }
 
-/* student */
+/* about student */
 .student img {
 	max-width: 240px;
 	margin: 0 1em 1em 0;
@@ -76,4 +77,11 @@ h1 {
 .lecture-list-item {
 	min-width: 310px;
 	width: 24%;
+}
+
+/* about lecture */
+.lecture img {
+	max-width: 240px;
+	margin: 0 1em 1em 0;
+	float: left;
 }

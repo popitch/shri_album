@@ -44,7 +44,7 @@
 		<div data-bind="with: _.find(data().students, equals(page.args()[0], prop('id')))">
 			<img src data-bind="attr: { src: photo }" />
 
-			<p data-bind="text: 'Город: ' + city, visible: city" class="student-city-name"></p>
+			<p data-bind="visible: city">Город: <strong data-bind="text: city"></strong></p>
 
 			<div data-bind="if: social.length > 0">
 				Другие нас. пункты:
@@ -59,6 +59,25 @@
 			<div data-bind="foreach: $root.withLinks(about).split('\n\n')">
 				<p data-bind="html: $data"></p>
 			</div>
+		</div>
+	</div>
+
+	<div data-bind="if: data() && page.is('lecture')" class="lecture">
+		<div data-bind="with: _.find(data().lectures, equals(page.args()[0], prop('id')))">
+
+			<h2 data-bind="text: name"></h2>
+
+			<div data-bind="with: _.find($root.data().lectors, $root.equals(lector_id, $root.prop('id')))">
+				<img src data-bind="attr: { src: photo_url }" />
+
+				<p>Ведущий: <strong data-bind="text: name"></strong></p>
+
+				<p data-bind="if: about" title="or not?">Ведущий о себе: <span data-bind="text: about"></span></p>
+			</div>
+
+			<p data-bind="if: slides_url">Слайды: <a href data-bind="attr: { href: slides_url }, text: slides_url"></a></p>
+			<p data-bind="if: video_url">Видео: <a href data-bind="attr: { href: video_url }, text: video_url"></a></p>
+
 		</div>
 	</div>
 
