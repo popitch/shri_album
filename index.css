@@ -4,11 +4,11 @@ body {
 	font-family: arial,helvetica,sans-serif; 
 	font-size: 18px;
 	line-height: 1.5;
-	word-wrap: break-word;
 }
 
 h1 {
 	text-align: center;
+	cursor: pointer;
 }
 
 .list {
@@ -17,7 +17,7 @@ h1 {
 }
 .list-item {
 	display: inline-block;
-	list-style-type: none; 
+	list-style-type: none;
 }
 
 .has-selected .list-item .link {
@@ -27,9 +27,13 @@ h1 {
 	color: #555;
 }
 .list-item .link {
+	padding-bottom: 2px;
 	color: #444;
 }
 .list-item.selected .link {
+	padding-bottom: 0;
+	border-bottom: 2px solid black;
+	text-decoration: none;
 	color: black;
 }
 
