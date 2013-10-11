@@ -13,7 +13,7 @@
 
 	<span data-bind="visible: !data">Loading...</span>
 
-	<ul class="menu list">
+	<ul data-bind="css: { 'has-selected': !page.is('index') }" class="menu list">
 		<li data-bind="css: { selected: page.is(/^student/) }" class="list-item item1">
 			<a href="#students" class="link">Студенты</a>
 		</li>

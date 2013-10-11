@@ -19,11 +19,15 @@ h1 {
 	display: inline-block;
 	list-style-type: none; 
 }
-.list-item .link {
-	color: #999;
+
+.has-selected .list-item .link {
+	color: #888;
 }
 .list-item:hover .link {
-	color: #666;
+	color: #555;
+}
+.list-item .link {
+	color: #444;
 }
 .list-item.selected .link {
 	color: black;
