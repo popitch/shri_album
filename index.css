@@ -85,3 +85,9 @@ h1 {
 	margin: 0 1em 1em 0;
 	float: left;
 }
+
+/* ? */
+p:hover .red-hover { color: red }
+p:hover .yellow-hover { color: yellow }
+p:hover .green-hover { color: green }
+p:hover .blue-hover { color: blue }
