@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>Вторая ШРИ в Москве, 2013</title>
 
 	<link type="text/css" href="./index.css" rel="stylesheet" />
@@ -40,7 +41,7 @@
 		</div>
 	</div>
 
-	<div data-bind="if: data() && page.is('student')" class="student">
+	<div data-bind="if: page.is('student') && data()" class="student">
 		<div data-bind="with: _.find(data().students, equals(page.args()[0], prop('id')))">
 			<img src data-bind="attr: { src: photo }" />
 
@@ -62,7 +63,7 @@
 		</div>
 	</div>
 
-	<div data-bind="if: data() && page.is('lecture')" class="lecture">
+	<div data-bind="if: page.is('lecture') && data()" class="lecture">
 		<div data-bind="with: _.find(data().lectures, equals(page.args()[0], prop('id')))">
 
 			<h2 data-bind="text: name"></h2>
