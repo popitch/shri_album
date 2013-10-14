@@ -6,7 +6,7 @@
 
 	<link type="text/css" href="./index.css" rel="stylesheet" />
 </head>
-<body>
+<body class="loading">
 	<h1 data-bind="click: page.pusher('/')" title="Нажми меня">Школа Разработки Интерфейсов, Москва, 2013</h1>
 
 	<ul data-bind="css: { 'has-selected': !page.is('index') }" class="menu list">
@@ -42,7 +42,7 @@
 	</div>
 
 	<div data-bind="if: page.is('student') && data()" class="student">
-		<div data-bind="with: _.find(data().students, equals(page.args()[0], prop('id')))">
+		<div data-bind="with: _.find(data().students, equals(page.args()[0], prop('id')))" class="secret">
 			<img src data-bind="attr: { src: photo }" />
 
 			<p data-bind="visible: city">Город: <strong data-bind="text: city"></strong></p>
@@ -64,7 +64,7 @@
 	</div>
 
 	<div data-bind="if: page.is('lecture') && data()" class="lecture">
-		<div data-bind="with: _.find(data().lectures, equals(page.args()[0], prop('id')))">
+		<div data-bind="with: _.find(data().lectures, equals(page.args()[0], prop('id')))" class="secret">
 
 			<h2 data-bind="text: name"></h2>
 

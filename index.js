@@ -158,4 +158,7 @@
 		s.src = 'http://code.jquery.com/jquery-latest.js';
 		document.body.appendChild(s);
 	}
+	
+	// page loaded
+	document.body.className = '';
 }();
