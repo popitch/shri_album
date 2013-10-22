@@ -107,21 +107,6 @@
 			showPage(fragment);
 		};
 
-		// catch simple link click
-		document.addEventListener('click', function(e) {
-			var target = e.srcElement || e.target;
-			if (target.tagName.toLowerCase() == 'a' && /#/.test(target.href)) {
-				var fragment = fragmentOf(e.target);
-				router.push(fragment);
-
-				if (e.preventDefault) {
-					e.preventDefault();
-				} else {
-					window.event.returnValue = false;
-				}
-			}
-		});
-
 		function showPage(fragment) {
 			fragment = fragment || fragmentOf(location);
 
